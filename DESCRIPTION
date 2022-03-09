@@ -1,0 +1,14 @@
+Package: Billboardsongs
+Title: Billoard Song Hits
+Version: 0.0.0.9000
+Authors@R: 
+    person("Tri", "Dang", , "tri@usf.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: The package pick a random song within the billboard top 100 his and give the name of the artist plus their song
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    billboard

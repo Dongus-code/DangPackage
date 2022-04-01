@@ -1,0 +1,56 @@
+---
+title: "Project Function Documentation"
+author: "Tri Dang"
+date: '2022-04-01'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Making Variables
+
+These varibales were mad ein order for my function package to perform. My package function takes in an artists and pick one of their song from the top 100 songs on billboard and randomly put it out. For my example, I picked Rihanna and Eminem. 
+
+```{r billboard}
+library(billboard)
+library(tidyverse)
+
+data("wiki_hot_100s")
+
+songs <- wiki_hot_100s %>%
+  mutate(no = case_when(
+    no == "Tie" ~ lag(no),
+    TRUE ~ no
+    )
+  ) %>%
+  mutate(score = 1 + 1 / as.numeric(no))
+
+songs <- songs %>%
+  group_by(title, artist) %>%
+  summarise(score = sum(score),
+            n_years = n(),
+            .groups = "drop")
+
+artists <- songs %>%
+  group_by(artist) %>%
+  summarise(score = sum(score),
+            n = sum(n_years),
+            .groups = "drop")
+
+
+random_song <- function(artist = "Rihanna", data = billboard::wiki_hot_100s){
+  data <- data[data$artist == artist, ]
+    song <- base::sample(data$title, 1)
+    cat(paste0("Random song by ", artist, ": ", song))
+}
+random_song("Eminem")
+random_song()
+
+
+```
+
+
+
+
